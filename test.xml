@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1">
+    <form>
+        <block>
+            <prompt>Hello, welcome to use our service.</prompt>
+        </block>
+
+        <menu id="mainMenu" dtmf="true">
+            <prompt>Please press 1 for information consultation and 2 for case report.</prompt>
+      
+            <choice dtmf="1" next="#infoInquiry">information consultation</choice>
+            <choice dtmf="2" next="#caseReport">case report</choice>
+        </menu>
+
+        <form id="infoInquiry">
+            <block>
+                <prompt>
+                    Here are the details of the commission.
+                    <!-- record file -->
+                </prompt>
+                <filled>
+                    <submit next="#mainMenu" namelist="return"/>
+                </filled>
+            </block>
+        </form>
+
+        <form id="caseReport">
+            <block>
+                <prompt>Please start reporting your case after the prompt tone. Press any key to end the report.</prompt>
+            </block>
+                <record name="userCase" beep="true" dtmfterm="true" maxtime="60s">
+                    <filled>
+                    <prompt>Case has been recorded. Thank you for your report.</prompt>
+                    <hangup/>
+                    </filled>
+                </record>
+        </form>
+    </form>
+</vxml>
