@@ -23,12 +23,42 @@
                 </filled>
             </block>
         </form>
-
+            
         <form id="caseReport">
+            <prompt>
+            Please select tree species,
+            Press 1 for Pterocarpus erinaceus,
+            Press 2 for Terminalia habeensis,
+            Press 3 for Afzelia Africana,
+            Press 4 for Khaya senegalensis,
+            Press 5 for Dalbergia melanoxylon,
+            For other situations, please press 6 for oral report.
+            </prompt>
+            <choice dtmf="1" next="#location">Pterocarpus erinaceus</choice>
+            <choice dtmf="2" next="#location">Terminalia habeensis</choice>
+            <choice dtmf="3" next="#location">Afzelia Africana</choice>
+            <choice dtmf="4" next="#location">Khaya senegalensis</choice>
+            <choice dtmf="5" next="#location">Dalbergia melanoxylon</choice>
+            <choice dtmf="6" next="#treeType">oral report</choice>
+        </form>
+
+        <form id="treeType">
             <block>
-                <prompt>Please start reporting your case after the prompt tone. Press any key to end the report.</prompt>
+                <prompt>Please start reporting after the prompt tone. Press any key to end the report.</prompt>
             </block>
-                <record name="userCase" beep="true" dtmfterm="true" maxtime="60s">
+                <record name="treeType" beep="true" dtmfterm="true" maxtime="60s">
+                    <filled>
+                    <prompt>Case has been recorded. Thank you for your report.</prompt>
+                    <hangup/>
+                    </filled>
+                </record>
+        </form>
+
+        <form id="location">
+            <block>
+                <prompt>Please start reporting after the prompt tone. Press any key to end the report.</prompt>
+            </block>
+                <record name="location" beep="true" dtmfterm="true" maxtime="60s">
                     <filled>
                     <prompt>Case has been recorded. Thank you for your report.</prompt>
                     <hangup/>
