@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1">
+    <block>
+        <prompt>Hello, welcome to use our service.</prompt>
+    </block>
+
+    <menu id="mainMenu" dtmf="true">
+        <prompt>Press 1 for information consultation,
+                press 2 for case report,
+                press 3 for language selection.</prompt>
+    
+        <choice dtmf="1" next="#infoInquiry">information consultation</choice>
+        <choice dtmf="2" next="#caseReport">case report</choice>
+        <choice dtmf="3" next="#language">language selection</choice>
+    </menu>
+
+    <form id="language">
+        <block>
+            <prompt> 
+            Language module not completed.
+            </prompt>
+            
+                <submit next="#mainMenu" namelist="return"/>
+            
+        </block>
+    </form>
+
+    <form id="infoInquiry">
+        <block>
+            <prompt>
+                Here are the details of the commission.
+                <!-- record file -->
+            </prompt>
+
+                <submit next="#mainMenu" namelist="return"/>
+
+        </block>
+    </form>
+        
+    <menu id="caseReport" dtmf="true">
+
+            <prompt>
+            Please select tree species,
+            Press 1 for Pterocarpus erinaceus,
+            Press 2 for Terminalia habeensis,
+            Press 3 for Afzelia Africana,
+            Press 4 for Khaya senegalensis,
+            Press 5 for Dalbergia melanoxylon,
+            For other situations, please press 6 for oral report.
+            </prompt>
+
+            <noinput>
+            <prompt> No input received. Please select a tree species. </prompt>
+            </noinput>
+            <nomatch>
+            <prompt> I didn't understand that. Please select a tree species. </prompt>
+            </nomatch>
+
+            <choice dtmf="1" next="#report">Pterocarpus erinaceus</choice>
+            <choice dtmf="2" next="#report">Terminalia habeensis</choice>
+            <choice dtmf="3" next="#report">Afzelia Africana</choice>
+            <choice dtmf="4" next="#report">Khaya senegalensis</choice>
+            <choice dtmf="5" next="#report">Dalbergia melanoxylon</choice>
+            <choice dtmf="6" next="#report">oral report</choice>
+
+    </menu>
+
+    <form id="report">
+        <block>
+            <prompt>Please start reporting after the prompt tone. Press any key to end the report.</prompt>
+        </block>
+        <record name="record" beep="true" dtmfterm="true" maxtime="5s" finalsilence="10s">
+            <filled>
+                <if cond="record$.termchar == '' and record$.utterance == ''">
+                    <prompt>Canceled.</prompt>
+                <else>
+                    <prompt>Case has been recorded. Thank you for your report.</prompt>
+                </else>
+                </if>
+            </filled>
+        </record>
+    </form>
+    
+</vxml>
+
