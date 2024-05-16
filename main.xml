@@ -56,12 +56,30 @@
             <prompt> I didn't understand that. Please select a tree species. </prompt>
             </nomatch>
 
-            <choice dtmf="1" next="#report">Pterocarpus erinaceus</choice>
-            <choice dtmf="2" next="#report">Terminalia habeensis</choice>
-            <choice dtmf="3" next="#report">Afzelia Africana</choice>
-            <choice dtmf="4" next="#report">Khaya senegalensis</choice>
-            <choice dtmf="5" next="#report">Dalbergia melanoxylon</choice>
-            <choice dtmf="6" next="#report">oral report</choice>
+            <choice dtmf="1" next="#report">
+                Pterocarpus erinaceus
+                <assign name="treeType" expr="1"/>
+            </choice>
+            <choice dtmf="2" next="#report">
+                Terminalia habeensis
+                <assign name="treeType" expr="2"/>
+            </choice>
+            <choice dtmf="3" next="#report">
+                Afzelia Africana
+                <assign name="treeType" expr="3"/>
+            </choice>
+            <choice dtmf="4" next="#report">
+                Khaya senegalensis
+                <assign name="treeType" expr="4"/>
+            </choice>
+            <choice dtmf="5" next="#report">
+                Dalbergia melanoxylon
+                <assign name="treeType" expr="5"/>
+            </choice>
+            <choice dtmf="6" next="#report">
+                oral report
+                <assign name="treeType" expr="0"/>
+            </choice>
 
     </menu>
 
@@ -75,6 +93,8 @@
                     <prompt>Canceled.</prompt>
                 <else>
                     <prompt>Case has been recorded. Thank you for your report.</prompt>
+                    <submit next="https://renderdjangotest.onrender.com/vxmlUpload/" method="post" enctype="multipart/form-data" namelist="record treeType"/>
+                    
                 </else>
                 </if>
             </filled>
