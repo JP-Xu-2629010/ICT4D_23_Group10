@@ -1,39 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vxml version="2.1">
     <block>
-        <prompt>Hello, welcome to use our service.</prompt>
+        <prompt>Hello, welcome to use our service.
+        </prompt>
+
     </block>
 
     <menu id="mainMenu" dtmf="true">
+        <prompt>Hello, welcome to use our service.
+        <audio src="FR1.mp3"/>
+        </prompt>
+
         <prompt>Press 1 for information consultation,
                 press 2 for case report,
-                press 3 for language selection.</prompt>
+                press 3 for language selection.
+                <audio src="FR2.mp3"/>
+                </prompt>
     
         <choice dtmf="1" next="#infoInquiry">information consultation</choice>
         <choice dtmf="2" next="#caseReport">case report</choice>
         <choice dtmf="3" next="#language">language selection</choice>
     </menu>
 
-    <form id="language">
-        <block>
+    <menu id="language">
+        <!-- <block> -->
             <prompt> 
-            Language module not completed.
+            Press 1 for english,
+            press 2 for french.
+            <audio src="FR3.mp3"/>
             </prompt>
             
-                <submit next="#mainMenu" namelist="return"/>
+            <choice dtmf="1" next="#mainMenu"></choice>
+            <choice dtmf="2" next="#mainMenuFR"></choice>
+
+                <!-- <submit next="#mainMenu" namelist="return"/> -->
             
-        </block>
-    </form>
+        <!-- </block> -->
+    </menu>
+
+    <menu id="mainMenuFR" dtmf="true">
+        <prompt>
+        <audio src="FR1.mp3"/>
+        </prompt>
+
+        <prompt><audio src="FR2.mp3"/>
+                press 3 for language selection.
+                </prompt>
+
+        <choice dtmf="1" next="#infoInquiryFR">information consultation</choice>
+        <choice dtmf="2" next="#caseReportFR">case report</choice>
+        <choice dtmf="3" next="#language">language selection</choice>
+    </menu>
+
 
     <form id="infoInquiry">
         <block>
             <prompt>
                 Here are the details of the commission.
-                <!-- record file -->
             </prompt>
 
                 <submit next="#mainMenu" namelist="return"/>
+        </block>
+    </form>
 
+    <form id="infoInquiryFR">
+        <block>
+            <prompt>
+                <audio src="BcastFR.mp3"/>
+            </prompt>
+
+                <submit next="#mainMenuFR" namelist="return"/>
         </block>
     </form>
         
@@ -83,23 +119,84 @@
 
     </menu>
 
+    <menu id="caseReportFR" dtmf="true">
+
+            <prompt>
+            <audio src="FR4.mp3"/>
+            </prompt>
+
+            <noinput>
+            <prompt> No input received. Please select a tree species. </prompt>
+            </noinput>
+            <nomatch>
+            <prompt> I didn't understand that. Please select a tree species. </prompt>
+            </nomatch>
+
+            <choice dtmf="1" next="#reportFR">
+                Pterocarpus erinaceus
+                <assign name="treeType" expr="1"/>
+            </choice>
+            <choice dtmf="2" next="#reportFR">
+                Terminalia habeensis
+                <assign name="treeType" expr="2"/>
+            </choice>
+            <choice dtmf="3" next="#reportFR">
+                Afzelia Africana
+                <assign name="treeType" expr="3"/>
+            </choice>
+            <choice dtmf="4" next="#reportFR">
+                Khaya senegalensis
+                <assign name="treeType" expr="4"/>
+            </choice>
+            <choice dtmf="5" next="#reportFR">
+                Dalbergia melanoxylon
+                <assign name="treeType" expr="5"/>
+            </choice>
+            <choice dtmf="6" next="#reportFR">
+                oral report
+                <assign name="treeType" expr="0"/>
+            </choice>
+
+    </menu>
+
     <form id="report">
         <block>
             <prompt>Please start reporting after the prompt tone. Press any key to end the report.</prompt>
         </block>
         <record name="record" beep="true" dtmfterm="true" maxtime="5s" finalsilence="10s">
             <filled>
-                <if cond="record$.termchar == '' and record$.utterance == ''">
+                <!-- <if cond="record$.termchar == '' and record$.utterance == ''">
                     <prompt>Canceled.</prompt>
-                <else>
+                <else> -->
                     <prompt>Case has been recorded. Thank you for your report.</prompt>
-                    <submit next="https://renderdjangotest.onrender.com/vxmlUpload/" method="post" enctype="multipart/form-data" namelist="record treeType"/>
+                    <!-- <submit next="https://renderdjangotest.onrender.com/vxmlUpload/" method="post" namelist=""/> -->
                     
-                </else>
-                </if>
+                <!-- </else>
+                </if> -->
+            </filled>
+        </record>
+    </form>
+
+    <form id="reportFR">
+        <block>
+            <prompt>
+                <audio src="FR5.mp3"/>
+            </prompt>
+        </block>
+        <record name="record" beep="true" dtmfterm="true" maxtime="5s" finalsilence="10s">
+            <filled>
+                <!-- <if cond="record$.termchar == '' and record$.utterance == ''">
+                    <prompt>Canceled.</prompt>
+                <else> -->
+                    <prompt>
+                        <audio src="FR6.mp3"/>
+                    </prompt>
+                    <!-- <submit next="https://renderdjangotest.onrender.com/vxmlUpload/" method="post" namelist=""/> -->
+                    
+                <!-- </else>
+                </if> -->
             </filled>
         </record>
     </form>
     
 </vxml>
-
